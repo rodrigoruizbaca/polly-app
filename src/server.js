@@ -2,8 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const service = require('./service/post-service');
 const _ = require('lodash');
+const AWS = require('aws-sdk');
 const asyncHandler = require('express-async-handler');
 
+
+AWS.config.update({region:'us-west-2'});
 var app = express();
 app.use(bodyParser.json());
 
@@ -18,10 +21,10 @@ app.post('/posts', asyncHandler( async (req, res, next) => {
     res.send({newPost});
 }));
 
-app.patch('/posts/convert/:id', asyncHandler( async (req, res, next) => {
-    
-    
-    res.send({newPost});
+app.patch('/posts/process/:id', asyncHandler( async (req, res, next) => {
+    var id = req.params.id;
+    const item = await service.processPost(id);    
+    res.send({item});
 }));
 
 app.listen(3000, () => {

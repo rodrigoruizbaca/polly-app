@@ -1,6 +1,7 @@
 const AWS = require('aws-sdk');
 const uuid = require('uuid');
 AWS.config.update({region:'us-west-2'});
+
 const documentClient = new AWS.DynamoDB.DocumentClient();
 
 const getPosts = async (id) => {
@@ -58,9 +59,10 @@ const updatePost = async ({id, url}) => {
         },
         "ReturnValues": "ALL_NEW"
     }
-    return await documentClient.update(params).promise();
+    const updatedPost = await documentClient.update(params).promise();
+    return updatedPost.Attributes;
 };
 
 module.exports.getPosts = getPosts;
 module.exports.savePost = savePost;
-
+module.exports.updatePost = updatePost  ;
