@@ -10,6 +10,12 @@ AWS.config.update({region:'us-west-2'});
 var app = express();
 app.use(bodyParser.json());
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 app.get('/posts', async (req, res) => {
     const data = await service.getPosts("*");
     res.send({data});
@@ -27,6 +33,6 @@ app.patch('/posts/process/:id', asyncHandler( async (req, res, next) => {
     res.send({item});
 }));
 
-app.listen(3000, () => {
-    console.log(`Started up at port 3000`);
+app.listen(4000, () => {
+    console.log(`Started up at port 4000`);
 });
