@@ -7,7 +7,7 @@ const convertToMp3 = async ({text, voice}) => {
     const params = {
         OutputFormat: 'mp3',
         Text: text,
-        VoiceId: "Joanna"
+        VoiceId: voice
     };
     const stream = await polly.synthesizeSpeech(params).promise();
     return stream;

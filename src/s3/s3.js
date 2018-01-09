@@ -18,8 +18,9 @@ const getUrl = async (id) => {
         Bucket: "polly-ws-audio"
     };
     const location = await s3.getBucketLocation(params).promise();
-    if (location.region) {
-        url_begining = "https://s3-" + region + ".amazonaws.com/";
+    console.log(location);
+    if (location.LocationConstraint) {
+        url_begining = "https://s3-" + location.LocationConstraint + ".amazonaws.com/";
     }
     const url = url_begining + "polly-ws-audio" + "/" + id + ".mp3";
     return url;    
